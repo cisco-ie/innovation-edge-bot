@@ -1,28 +1,35 @@
 {
-  "//1": "describes your app and its dependencies",
-  "//2": "https://docs.npmjs.com/files/package.json",
-  "//3": "updating this file will download and update your packages",
-
-  "name": "my-glitch-app",
+  "name": "botkit-starter-ciscospark",
   "version": "0.0.1",
-  "description": "What am I about?",
-  "main": "server.js",
+  "description": "A starter kit for building a custom Cisco Spark bot with Botkit Studio",
+  "main": "bot.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node bot.js"
   },
   "dependencies": {
-    "express": "^4.16.2"
+    "body-parser": "^1.15.2",
+    "botkit": "^0.6",
+    "botkit-studio-metrics": "^0.0.1",
+    "debug": "^2.6.0",
+    "express": "^4.14.0",
+    "node-env-file": "^0.1.8",
+    "request": "^2.79.0",
+    "wordfilter": "^0.2.6"
   },
-  "engines": {
-    "node": "8.x"
-  },
+  "devDependencies": {},
   "repository": {
-    "url": "https://glitch.com/edit/#!/welcome-project"
+    "type": "git",
+    "url": "https://github.com/howdyai/botkit-starter-ciscospark.git"
   },
-  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/howdyai/botkit-starter-ciscospark/issues"
+  },
+  "homepage": "https://github.com/howdyai/botkit-starter-ciscospark",
   "keywords": [
-    "node",
-    "glitch",
-    "express"
-  ]
+    "bots",
+    "chatbots",
+    "Cisco Spark"
+  ],
+  "author": "ben@howdy.ai",
+  "license": "ISC"
 }
