@@ -29,9 +29,15 @@ module.exports = function(controller) {
                 const category = parseInt(response.text);
                 if (category < 5 && category > 0) {
                   Cache.get(projectMap[category], (err, value) => {
-                    if (err) convo.say('Houston, we got a problem. Please reach out to @brhim about this issue!');
-      
-                    console.log(value);
+                    if (err) {
+                      convo.say('Houston, we got a problem. Please reach out to @brhim about this issue!');
+                    } else {
+                      if (category === 1) {
+                        convo.say(listAllProjects(value));
+                      } else {
+                        convo.say(listProjects(value));
+                      }
+                    };
                   });
                 } else {
                   convo.say('Hrmm... I\'m not too sure what you are looking for, respond with either **(1/2/3/4)**');
@@ -42,7 +48,14 @@ module.exports = function(controller) {
     });
 };
 
-const displayProject = (projects) => {
- return `
+// All projects has a special format
+const listAllProjects = (projects) => {
+   const message = projects.map(project => `\n #### ${project['Project Name']} \n *${project.Description}* \n\n`);
+  return message.toString();
+}
 
+// All projects has a special format
+const listProjects = (projects) => {
+   const message = projects.map(project => `\n #### ${project['Project Name']} \n *${project.Description}*`);
+  return message.toString();
 }
