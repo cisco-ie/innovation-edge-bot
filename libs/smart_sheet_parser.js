@@ -1,6 +1,11 @@
 // Constants, let's move later
 const SHEET_ID = process.env.sheet_id;
-const SHEET_CACHE_KEY = 'IE_SHEET';
+const CONSTANTS = require('../constants/keys.js');
+const SHEET_CACHE_KEY = CONSTANTS.SHEET_CACHE_KEY
+const ACTIVE_KEY = CONSTANTS.ACTIVE_KEY;
+const COMPLETED_KEY = CONSTANTS.COMPLETED_KEY;
+const POTENTIAL_KEY = CONSTANTS.POTENTIAL_KEY;
+
 const Cache = require('../store/bot_cache.js');
 
 let active_projects = [];
@@ -38,7 +43,9 @@ const processSheet = () => {
         }, {});
         return formattedRow;
       });
-    
+
+      // Organize and cache
+      organizeProjects(rows);
       // Store in cache
       Cache.set(SHEET_CACHE_KEY, rows);
     })
@@ -51,11 +58,12 @@ const organizeProjects = (projects) => {
   if (!projects) return;
   projects.forEach(project => {
     if (project.Status === 'Active') { active_projects.push(project) }
-    if (project.Status === 'Completed') { completed_projects.push(project) }
+    if (project.Status === 'Completed') { complete_projects.push(project) }
     if (project.Status === 'Potential') { potential_projects.push(project) }
   });
-  Cache.set(ACTIVE_PROJECT_KEY, active_projects);
-  Cache.set(COMPLETED_KEY, completedpro
+  Cache.set(ACTIVE_KEY, active_projects);
+  Cache.set(COMPLETED_KEY, complete_projects);
+  Cache.set(POTENTIAL_KEY, potential_projects);
 };
 
 // Check if it already exist in cache before processing
@@ -65,6 +73,6 @@ Cache.get(SHEET_CACHE_KEY, (err, value) => {
   if (!value) {
     processSheet();
   }
-  
+
   console.log('da value', value);
 });
