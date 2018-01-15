@@ -11,6 +11,7 @@ const smartsheet = client.createClient({
 // The `smartsheet` variable now contains access to all of the APIs
 smartsheet.sheets.getSheet({id: SHEET_ID})
     .then(function(sheetInfo) {
+       console.log(sheetInfo.rows[1].cells);
       const columnNames = sheetInfo.columns.map(column => column.title);
       // This will create a basic object structure per column names dynamically
       const rowStructure = columnNames.reduce((acc, value) => {
@@ -18,9 +19,18 @@ smartsheet.sheets.getSheet({id: SHEET_ID})
         return acc;
       }, {});
   
-      con
+      console.log(rowStructure);
   
-      console.log(row);
+      const rows = sheetInfo.rows.map((row) => {
+        const formattedRows = row.cells.map((cell, index) => {
+            const columnKey = columnNames[index];
+            const rowCopy = Object.assign({}, rowStructure);
+            rowCopy[columnKey] =
+            return rowCopy;
+        });
+      });
+  
+      console.log(rows);
     })
     .catch(function(error) {
       console.log(error);
