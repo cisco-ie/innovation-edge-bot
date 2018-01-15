@@ -23,8 +23,8 @@ Cache.get(SHEET_CACHE_KEY, (err, value) => {
 
 // Retrieves sheet and stores in bot cache
 const processSheet = () => {
-// The `smartsheet` variable now contains access to all of the APIs
-smartsheet.sheets.getSheet({id: SHEET_ID})
+  // The `smartsheet` variable now contains access to all of the APIs
+  smartsheet.sheets.getSheet({id: SHEET_ID})
     .then(function(sheetInfo) {
       const columnNames = sheetInfo.columns.map(column => column.title);
       // This will create a basic object structure per column names dynamically
