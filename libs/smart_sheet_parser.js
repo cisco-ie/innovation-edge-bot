@@ -1,10 +1,10 @@
 // Constants, let's move later
-const SHEET_ID = process.env.SECRET.sheet_id;
+const SHEET_ID = process.env.sheet_id;
 
 // Initialize the client
 const client = require('smartsheet');
 const smartsheet = client.createClient({
-  accessToken: process.env.SECRET.smart_sheet_token
+  accessToken: process.env.smart_sheet_token,
   logLevel: 'info'
 });
 
@@ -16,4 +16,3 @@ smartsheet.sheets.getSheet({id: SHEET_ID})
     .catch(function(error) {
       console.log(error);
     });
-})
