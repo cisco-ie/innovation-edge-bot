@@ -9,8 +9,8 @@ through the conversation are chosen based on the user's response.
 
 */
 
-const CACHE = require('../store/bot_cache.js');
-const CONSTANTS = require('../constants/keys.js);
+const Cache = require('../store/bot_cache.js');
+const CONSTANTS = require('../constants/index.js');
 
 module.exports = function(controller) {
 
@@ -19,12 +19,30 @@ module.exports = function(controller) {
         bot.startConversation(message, function(err, convo) {
             convo.ask('What projects would you like to see? \n1. All \n2. Completed \n3. Active \n4. Potential', function(response, convo) {
                 const projectMap = {
-                  1: CONSTANTS.,
-                  2: CONSTANTS.
-                convo.say('Cool! Here are some of the projects for' + response.text + ' too!');
+                  1: CONSTANTS.ALL,
+                  2: CONSTANTS.COMPLETED,
+                  3: CONSTANTS.ACTIVE,
+                  4: CONSTANTS.POTENTIAL
+                };
+              
+                const formatMessage = `Cool! Here are some projects:`;
+                const category = parseInt(response.text);
+                if (category < 5 && category > 0) {
+                  Cache.get(projectMap[category], (err, value) => {
+                    if (err) convo.say('Houston, we got a problem. Please reach out to @brhim about this issue!');
+      
+                    console.log(value);
+                  });
+                } else {
+                  convo.say('Hrmm... I\'m not too sure what you are looking for, respond with either **(1/2/3/4)**');
+                }
                 convo.next();
             });
         });
-
     });
 };
+
+const displayProject = (projects) => {
+ return `
+
+}

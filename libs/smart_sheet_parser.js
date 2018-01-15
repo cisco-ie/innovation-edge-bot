@@ -1,16 +1,18 @@
 // Constants, let's move later
 const SHEET_ID = process.env.sheet_id;
-const CONSTANTS = require('../constants/keys.js');
-const SHEET_CACHE_KEY = CONSTANTS.SHEET_CACHE_KEY
-const ACTIVE_KEY = CONSTANTS.ACTIVE_KEY;
-const COMPLETED_KEY = CONSTANTS.COMPLETED_KEY;
-const POTENTIAL_KEY = CONSTANTS.POTENTIAL_KEY;
+const CONSTANTS = require('../constants/index.js');
+const ALL_KEY = CONSTANTS.ALL;
+const ACTIVE_KEY = CONSTANTS.ACTIVE;
+const COMPLETED_KEY = CONSTANTS.COMPLETED;
+const POTENTIAL_KEY = CONSTANTS.POTENTIAL;
+const INACTIVE_KEY = CONSTANTS.INACTIVE;
 
 const Cache = require('../store/bot_cache.js');
 
 let active_projects = [];
 let complete_projects = [];
 let potential_projects = [];
+let inactive_projects = [];
 
 // Initialize the client
 const client = require('smartsheet');
@@ -47,7 +49,7 @@ const processSheet = () => {
       // Organize and cache
       organizeProjects(rows);
       // Store in cache
-      Cache.set(SHEET_CACHE_KEY, rows);
+      Cache.set(ALL_KEY, rows);
     })
     .catch(function(error) {
       console.log(error);
@@ -58,21 +60,21 @@ const organizeProjects = (projects) => {
   if (!projects) return;
   projects.forEach(project => {
     if (project.Status === 'Active') { active_projects.push(project) }
-    if (project.Status === 'Completed') { complete_projects.push(project) }
+    if (project.Status === 'Complete') { complete_projects.push(project) }
     if (project.Status === 'Potential') { potential_projects.push(project) }
+    if (project.Status === 'Inactive') { inactive_projects.push(project) }
   });
   Cache.set(ACTIVE_KEY, active_projects);
   Cache.set(COMPLETED_KEY, complete_projects);
   Cache.set(POTENTIAL_KEY, potential_projects);
+  Cache.set(INACTIVE_KEY, inactive_projects);
 };
 
 // Check if it already exist in cache before processing
-Cache.get(SHEET_CACHE_KEY, (err, value) => {
+Cache.get(ALL_KEY, (err, value) => {
   if (err) throw new Error('Failed to retrieve cache!');
   
   if (!value) {
     processSheet();
   }
-
-  console.log('da value', value);
 });
