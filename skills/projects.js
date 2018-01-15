@@ -42,13 +42,16 @@ module.exports = function(controller) {
 // All projects has a special format
 const listAllProjects = (projects) => {
    const message = projects.map(project => {
+     const demoString = (project.Demo !== '#' || ) ? `| ${sm.link(project.Demo, '**View Demo**')}` : '';
      return `
 ${sm.h4(project['Project Name'])}
-${sm.codeBlock(project.Description)}
-${sm.b(project.Status)} | ${sm.i(project['Tech Lead'])} | ${sm.link(project.demo, 'DEMO')}
-${sm.lineBreak()}`
-  };
-  return message.toString();
+>${project.Description}
+
+${sm.b(project.Status)}  |  ${sm.i(project['Tech Lead'])} ${demoString}
+
+${sm.hr()}`
+   });
+  return message.join("").toString();
 }
 
 // All projects has a special format
