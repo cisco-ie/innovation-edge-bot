@@ -1,12 +1,13 @@
 const Cache = require('../store/bot_cache.js');
 const CONSTANTS = require('../constants/index.js');
+const smartSheetParser = require('../libs/smart_sheet_parser.js');
 
 const sm = require('spark-messages');
 
 module.exports = function(controller) {
 
     controller.hears(['projects'], 'direct_message,direct_mention', function(bot, message) {
-
+      
         bot.startConversation(message, function(err, convo) {
             convo.ask('What projects would you like to see? \n1. All \n2. Completed \n3. Active \n4. Potential', function(response, convo) {
                 const projectMap = {
@@ -25,23 +26,20 @@ module.exports = function(controller) {
                   4: {
                     key: CONSTANTS.POTENTIAL,
                     name: 'potential'
+                  },
+                  5: {
+                    key: CONSTANTS.INACTIVE,
+                    name: 'inactive'
                   }
                 };
         
               
                 const formatMessage = `Cool! Here are some projects:`;
-                const category = projectMapparseInt(response.text)
+                const category = parseInt(response.text);
                 if (category < 5 && category > 0) {
-                  Cache.get(projectMap[category].key, (err, value) => {
-                    if (err) {
-                      convo.say('Houston, we got a problem. Please reach out to @brhim about this issue!');
-                    } else {
-                        convo.say(`Currently there are **${value.length}** ${} projects. Here are the projects: \n`);
-                        convo.say(listProjects(value));
-                    };
-                  });
+      
                 } else {
-                  convo.say('Hrmm... I\'m not too sure what you are looking for, respond with either **(1/2/3/4)**');
+                  convo.say('Hrmm... I\'m not too sure what you are looking for, respond with either **(1 / 2 / 3 /4)**');
                 }
                 convo.next();
             });
@@ -49,6 +47,17 @@ module.exports = function(controller) {
     });
 };
 
+const fetchProjects () => {
+              try {
+                      let value = myCache.get(projectMap[category].key, true);
+                      smartSheetParser.fetchAndUpdate(
+                      if (!value) 
+                      convo.say(`Currently there are **${value.length}** ${projectMap[category].name} projects. Here are the projects: \n`);
+                      convo.say(listProjects(value));
+                  } catch(err) {
+                      convo.say('🔥 Houston, we got a problem. Please reach out to 👩‍🚒 Brandon Him (brhim@cisco.com) about this issue!');
+                  }
+}
 // All projects has a special format
 const listProjects = (projects) => {
    const message = projects.map(project => {
