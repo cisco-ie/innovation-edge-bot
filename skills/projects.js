@@ -10,24 +10,34 @@ module.exports = function(controller) {
         bot.startConversation(message, function(err, convo) {
             convo.ask('What projects would you like to see? \n1. All \n2. Completed \n3. Active \n4. Potential', function(response, convo) {
                 const projectMap = {
-                  1: CONSTANTS.ALL,
-                  2: CONSTANTS.COMPLETED,
-                  3: CONSTANTS.ACTIVE,
-                  4: CONSTANTS.POTENTIAL
+                  1: {
+                    key: CONSTANTS.ALL,
+                    name: ''
+                  },
+                  2: {
+                    key: CONSTANTS.COMPLETED,
+                    name: 'completed'
+                  },
+                  3: {
+                    key: CONSTANTS.ACTIVE,
+                    name: 'active'
+                  },
+                  4: {
+                    key: CONSTANTS.POTENTIAL,
+                    name: 'potential'
+                  }
                 };
+        
               
                 const formatMessage = `Cool! Here are some projects:`;
-                const category = parseInt(response.text);
+                const category = projectMapparseInt(response.text)
                 if (category < 5 && category > 0) {
-                  Cache.get(projectMap[category], (err, value) => {
+                  Cache.get(projectMap[category].key, (err, value) => {
                     if (err) {
                       convo.say('Houston, we got a problem. Please reach out to @brhim about this issue!');
                     } else {
-                      if (category === 1) {
-                        convo.say(listAllProjects(value));
-                      } else {
+                        convo.say(`Currently there are **${value.length}** ${} projects. Here are the projects: \n`);
                         convo.say(listProjects(value));
-                      }
                     };
                   });
                 } else {
@@ -40,11 +50,13 @@ module.exports = function(controller) {
 };
 
 // All projects has a special format
-const listAllProjects = (projects) => {
+const listProjects = (projects) => {
    const message = projects.map(project => {
-     const demoString = (project.Demo !== '#' || ) ? `| ${sm.link(project.Demo, '**View Demo**')}` : '';
+     const containsDemo = (project.Demo !== '#') && (project.Demo !== 'N/A');
+     const demoString = (containsDemo) ? `| ${sm.link(project.Demo, '**View Demo**')}` : '';
+     
      return `
-${sm.h4(project['Project Name'])}
+${sm.h3(project['Project Name'])}
 >${project.Description}
 
 ${sm.b(project.Status)}  |  ${sm.i(project['Tech Lead'])} ${demoString}
@@ -52,10 +64,4 @@ ${sm.b(project.Status)}  |  ${sm.i(project['Tech Lead'])} ${demoString}
 ${sm.hr()}`
    });
   return message.join("").toString();
-}
-
-// All projects has a special format
-const listProjects = (projects) => {
-   const message = projects.map(project => `\n #### ${project['Project Name']}\n*${project.Status} project*`);
-  return message.toString();
 }
