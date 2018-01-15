@@ -12,8 +12,17 @@ const smartsheet = client.createClient({
 
 // Check if it already exist in cache before processing
 Cache.get(SHEET_CACHE_KEY, (err, value) => {
+  if (err) throw new Error('Failed to retrieve cache!');
   
+  if (!value) {
+    processSheet();
+  }
+  
+  console.log('da value', value);
 });
+
+// Retrieves sheet and stores in bot cache
+const processSheet = () => {
 // The `smartsheet` variable now contains access to all of the APIs
 smartsheet.sheets.getSheet({id: SHEET_ID})
     .then(function(sheetInfo) {
@@ -35,8 +44,10 @@ smartsheet.sheets.getSheet({id: SHEET_ID})
         }, {});
         return formattedRow;
       });
-      console.log(rows);
+  
+      Cache.set(SHEET_CACHE_KEY, rows);
     })
     .catch(function(error) {
       console.log(error);
     });
+};
