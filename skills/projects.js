@@ -1,16 +1,7 @@
-/*
-
-WHAT IS THIS?
-
-This module demonstrates simple uses of Botkit's conversation system.
-
-In this example, Botkit hears a keyword, then asks a question. Different paths
-through the conversation are chosen based on the user's response.
-
-*/
-
 const Cache = require('../store/bot_cache.js');
 const CONSTANTS = require('../constants/index.js');
+
+const sm = require('spark-messages');
 
 module.exports = function(controller) {
 
@@ -50,12 +41,18 @@ module.exports = function(controller) {
 
 // All projects has a special format
 const listAllProjects = (projects) => {
-   const message = projects.map(project => `\n #### ${project['Project Name']} \n *${project.Description}* \n\n`);
+   const message = projects.map(project => {
+     return `
+${sm.h4(project['Project Name'])}
+${sm.codeBlock(project.Description)}
+${sm.b(project.Status)} | ${sm.i(project['Tech Lead'])} | ${sm.link(project.demo, 'DEMO')}
+${sm.lineBreak()}`
+  };
   return message.toString();
 }
 
 // All projects has a special format
 const listProjects = (projects) => {
-   const message = projects.map(project => `\n #### ${project['Project Name']} \n *${project.Description}*`);
+   const message = projects.map(project => `\n #### ${project['Project Name']}\n*${project.Status} project*`);
   return message.toString();
 }
