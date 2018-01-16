@@ -51,7 +51,8 @@ module.exports = function(controller) {
                     convo.gotoThread('error');
                   }
                 } else {
-                  convo.repeat();
+                  convo.addMessage('Hrrmmm... unsure of what you wanted, feel free to ask me again another time.', 'default');
+                  convo.next();
                 }
                 convo.next();
             });
