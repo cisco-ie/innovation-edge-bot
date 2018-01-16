@@ -44,9 +44,10 @@ module.exports = function(controller) {
                     if (!projects) {
                         convo.gotoThread('error');
                     }
-                    convo.addMessage('🔥 Houston, we got a problem! Please try again in a **few** minutes. If the issue continues to persist reach out to my creator, Brandon Him (brhim@cisco.com).','error');
+                    
                     convo.addMessage(`Currently there are **${projects.length}** ${projectMap[category].name} projects. Here are the projects: \n`, 'default');
                     convo.addMessage(listProjects(projects));
+                    
                   } catch (err) {
                     convo.gotoThread('error');
                   }
