@@ -72,22 +72,22 @@ const organizeProjects = (projects) => {
 
 const fetchSheets = () => {
   let value = Cache.get(ALL_KEY);
-    if (!value) {
-      processSheet();
-      return Promise.reject('No value present');
-    }
-    return Promise.resolve(value);
+  if (!value) {
+    processSheet();
+    // Reject, but re-process
+    return Promise.reject('No value present');
+  }
+  return Promise.resolve(value);
 };
 
 module.exports.update = () => {
   // Re-attempt if fails
   promiseRetry(function (retry, number) {
-    console.log('attempt number', number);
     return fetchSheets().catch(retry);
   })
   .then(function (value) {
-      console.log('success', value);
+      console.log('Smartsheet successfully processed, and cached');
   }, function (err) {
-      console.log('ERROR: 
+      console.log('ERROR: Error fetching API', err);
   });
 }

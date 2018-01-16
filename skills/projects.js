@@ -38,7 +38,7 @@ module.exports = function(controller) {
                 const category = parseInt(response.text);
                 if (category < 5 && category > 0) {
                   try {
-                    let projects = myCache.get(projectMap[category].key, true);
+                    let projects = Cache.get(projectMap[category].key);
                     if (!projects) {
                       stateError(convo);
                     }
@@ -56,7 +56,7 @@ module.exports = function(controller) {
     });
 };
 
-const stateError = (convo) => convo.say('🔥 Houston, we got a problem! Please try again in a few minutes. If the issue continues to persist reach out to my creator, Brandon Him');
+const stateError = (convo) => convo.say('🔥 Houston, we got a problem! Please try again in a **few** minutes. If the issue continues to persist reach out to my creator, Brandon Him (brhim@cisco.com).');
 
 // All projects has a special format
 const listProjects = (projects) => {
