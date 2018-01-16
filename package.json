@@ -19,8 +19,7 @@
     "spark-messages": "^1.0.5",
     "wordfilter": "^0.2.6",
     "retry": "^0.10.1",
-    "promise-retry": "^1.1.1",
-    "one-liner-joke": "^1.0.0"
+    "promise-retry": "^1.1.1"
   },
   "devDependencies": {},
   "repository": {
