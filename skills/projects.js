@@ -11,7 +11,7 @@ module.exports = function(controller) {
       
         bot.startConversation(message, (err, convo) => {
           
-          convo.addQuestion('What projects would you like to see? \n1. All \n2. Completed \n3. Active \n4. Potential \n5. Inactive \n\n **(Hint: Enter either 1 / 2 / 3 / 4 / 5)**'
+          convo.addQuestion('What projects would you like to see? \n1. All \n2. Completed \n3. Active \n4. Potential \n5. Inactive \n\n *(Hint: Enter either 1 / 2 / 3 / 4 / 5)*'
             , (response, convo) => {
                 const projectMap = {
                   1: {
