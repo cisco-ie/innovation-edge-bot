@@ -10,7 +10,8 @@ module.exports = function(controller) {
         smartSheetParser.update();
       
         bot.startConversation(message, function(err, convo) {
-            convo.ask('What projects would you like to see? \n1. All \n2. Completed \n3. Active \n4. Potential \n5. Inactive', function(response, convo) {
+          
+          convo.addQuestion('What projects would you like to see? \n1. All \n2. Completed \n3. Active \n4. Potential \n5. Inactive', function(response, convo) {
                 const projectMap = {
                   1: {
                     key: CONSTANTS.ALL,
@@ -40,9 +41,10 @@ module.exports = function(controller) {
                   try {
                     let projects = Cache.get(projectMap[category].key);
                     if (!projects) {
-                      stateError(convo);
+                        convo.gotoThread('error')
                     }
-                    convo.say(`Currently there are **${projects.length}** ${projectMap[category].name} projects. Here are the projects: \n`);
+                    convo.addMessage(🔥 Houston, we got a problem! Please try again in a **few** minutes. If the issue continues to persist reach out to my creator, Brandon Him (brhim@cisco.com).','error');
+                    convo.addMessage(`Currently there are **${projects.length}** ${projectMap[category].name} projects. Here are the projects: \n`, 'default');
                     convo.say(listProjects(projects));
                   } catch (err) {
                     stateError(convo);
@@ -55,8 +57,6 @@ module.exports = function(controller) {
         });
     });
 };
-
-const stateError = (convo) => convo.say('🔥 Houston, we got a problem! Please try again in a **few** minutes. If the issue continues to persist reach out to my creator, Brandon Him (brhim@cisco.com).');
 
 // All projects has a special format
 const listProjects = (projects) => {
