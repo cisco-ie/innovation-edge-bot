@@ -8,6 +8,7 @@ const POTENTIAL_KEY = CONSTANTS.POTENTIAL;
 const INACTIVE_KEY = CONSTANTS.INACTIVE;
 
 const Cache = require('../store/bot_cache.js');
+const promiseRetry = require('promise-retry');
 
 let active_projects = [];
 let complete_projects = [];
@@ -23,7 +24,6 @@ const smartsheet = client.createClient({
 
 // Retrieves sheet and stores in bot cache
 const processSheet = () => {
- 
   // The `smartsheet` variable now contains access to all of the APIs
   smartsheet.sheets.getSheet({id: SHEET_ID})
     .then(function(sheetInfo) {
@@ -70,11 +70,35 @@ const organizeProjects = (projects) => {
   Cache.set(INACTIVE_KEY, inactive_projects);
 };
 
-// Check if it already exist in cache before processing
-Cache.get(ALL_KEY, (err, value) => {
-  if (err) throw new Error('Failed to retrieve cache!');
-  
-  if (!value) {
-    processSheet();
+const fetchSheets = () => {
+  try {
+    let value = Cache.get(ALL_KEY, true);
+    if (!value) {
+      throw new Error('No value present');
+    }
+    return value;
+  } catch (err) {
+    throw new err;
   }
-});
+};
+
+module.exports.update = () => {
+  promiseRetry(function (retry, number) {
+    console.log('attempt number', number);
+    return fetchSheets().catch(retry);
+  })
+  .then(function (value) {
+      // ..
+  }, function (err) {
+      // ..
+  });
+
+  // Check if it already exist in cache before processing
+  Cache.get(ALL_KEY, (err, value) => {
+    if (err) throw new Error('Failed to retrieve cache!');
+
+    if (!value) {
+      processSheet();
+    }
+  });
+}

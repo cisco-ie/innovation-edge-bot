@@ -1,15 +1,13 @@
 const Cache = require('../store/bot_cache.js');
 const CONSTANTS = require('../constants/index.js');
 const smartSheetParser = require('../libs/smart_sheet_parser.js');
-
-var promiseRetry = require('promise-retry');
 const sm = require('spark-messages');
 
 module.exports = function(controller) {
 
     controller.hears(['projects'], 'direct_message,direct_mention', function(bot, message) {
         // Fetch projects now for a better experience and less delay
-        
+        smartSheetParser.update();
       
         bot.startConversation(message, function(err, convo) {
             convo.ask('What projects would you like to see? \n1. All \n2. Completed \n3. Active \n4. Potential', function(response, convo) {
@@ -36,12 +34,19 @@ module.exports = function(controller) {
                   }
                 };
         
-              
                 const formatMessage = `Cool! Here are some projects:`;
                 const category = parseInt(response.text);
                 if (category < 5 && category > 0) {
-                  convo.say(`Currently there are **${value.length}** ${projectMap[category].name} projects. Here are the projects: \n`);
-                  convo.say(listProjects(value));
+                  try {
+                    let projects = myCache.get(projectMap[category].key, true);
+                    if (!projects) {
+                      stateError(convo);
+                    }
+                    convo.say(`Currently there are **${projects.length}** ${projectMap[category].name} projects. Here are the projects: \n`);
+                    convo.say(listProjects(projects));
+                  } catch (err) {
+                    stateError(convo);
+                  }
                 } else {
                   convo.say('Hrmm... I\'m not too sure what you are looking for, respond with either **(1 / 2 / 3 /4)**');
                 }
@@ -51,28 +56,7 @@ module.exports = function(controller) {
     });
 };
 
-const fetchProjects = (cb) => {
-  const operation = retry.operation();  
-}
-
-// Simple example
-promiseRetry(function (retry, number) {
-    try {
-      let value = myCache.get(projectMap[category].key, true);
-      if (!value) {
-        smartSheetParser.fetchAndUpdate();
-        fetchProjects();
-      }
-      return value;
-    } catch(err) {
-      console.log(err);
-    }
-})
-.then(function (value) {
-    // ..
-}, function (err) {
-    // ..
-});
+const stateError = (convo) => convo.say('🔥 Houston, we got a problem! Please try again in a few minutes. If the issue continues to persist reach out to my creator, Brandon Him');
 
 // All projects has a special format
 const listProjects = (projects) => {
