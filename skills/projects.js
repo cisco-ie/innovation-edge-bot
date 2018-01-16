@@ -5,13 +5,14 @@ const sm = require('spark-messages');
 
 module.exports = function(controller) {
 
-    controller.hears(['^projects'], 'direct_message,direct_mention', function(bot, message) {
+    controller.hears(['^projects'], 'direct_message,direct_mention', (bot, message) => {
         // Fetch projects now for a better experience and less delay
         smartSheetParser.update();
       
-        bot.startConversation(message, function(err, convo) {
+        bot.startConversation(message, (err, convo) => {
           
-          convo.addQuestion('What projects would you like to see? \n1. All \n2. Completed \n3. Active \n4. Potential \n5. Inactive', function(response, convo) {
+          convo.addQuestion('What projects would you like to see? \n1. All \n2. Completed \n3. Active \n4. Potential \n5. Inactive \n\n **(Hint: Enter either 1 / 2 / 3 / 4 / 5)**'
+            , (response, convo) => {
                 const projectMap = {
                   1: {
                     key: CONSTANTS.ALL,
@@ -41,16 +42,16 @@ module.exports = function(controller) {
                   try {
                     let projects = Cache.get(projectMap[category].key);
                     if (!projects) {
-                        convo.gotoThread('error')
+                        convo.gotoThread('error');
                     }
-                    convo.addMessage(🔥 Houston, we got a problem! Please try again in a **few** minutes. If the issue continues to persist reach out to my creator, Brandon Him (brhim@cisco.com).','error');
+                    convo.addMessage('🔥 Houston, we got a problem! Please try again in a **few** minutes. If the issue continues to persist reach out to my creator, Brandon Him (brhim@cisco.com).','error');
                     convo.addMessage(`Currently there are **${projects.length}** ${projectMap[category].name} projects. Here are the projects: \n`, 'default');
-                    convo.say(listProjects(projects));
+                    convo.addMessage(listProjects(projects));
                   } catch (err) {
-                    stateError(convo);
+                    convo.gotoThread('error');
                   }
                 } else {
-                  convo.say('Hrmm... I\'m not too sure what you are looking for, respond with either **(1 / 2 / 3 / 4 / 5)**');
+                  convo.repeat();
                 }
                 convo.next();
             });
