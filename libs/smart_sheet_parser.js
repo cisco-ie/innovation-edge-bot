@@ -71,34 +71,23 @@ const organizeProjects = (projects) => {
 };
 
 const fetchSheets = () => {
-  try {
-    let value = Cache.get(ALL_KEY, true);
+  let value = Cache.get(ALL_KEY);
     if (!value) {
-      throw new Error('No value present');
+      processSheet();
+      return Promise.reject('No value present');
     }
-    return value;
-  } catch (err) {
-    throw new err;
-  }
+    return Promise.resolve(value);
 };
 
 module.exports.update = () => {
+  // Re-attempt if fails
   promiseRetry(function (retry, number) {
     console.log('attempt number', number);
     return fetchSheets().catch(retry);
   })
   .then(function (value) {
-      // ..
+      console.log('success', value);
   }, function (err) {
-      // ..
-  });
-
-  // Check if it already exist in cache before processing
-  Cache.get(ALL_KEY, (err, value) => {
-    if (err) throw new Error('Failed to retrieve cache!');
-
-    if (!value) {
-      processSheet();
-    }
+      console.log('ERROR: 
   });
 }
