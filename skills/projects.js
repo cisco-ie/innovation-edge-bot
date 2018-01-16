@@ -2,7 +2,7 @@ const Cache = require('../store/bot_cache.js');
 const CONSTANTS = require('../constants/index.js');
 const smartSheetParser = require('../libs/smart_sheet_parser.js');
 
-const retry = require('retry');
+var promiseRetry = require('promise-retry');
 const sm = require('spark-messages');
 
 module.exports = function(controller) {
@@ -55,31 +55,25 @@ const fetchProjects = (cb) => {
   const operation = retry.operation();  
 }
 
-function faultTolerantResolve(address, cb) {
-  let operation = retry.operation();
-
-  operation.attempt(function(currentAttempt) {
-    
+// Simple example
+promiseRetry(function (retry, number) {
     try {
       let value = myCache.get(projectMap[category].key, true);
       if (!value) {
         smartSheetParser.fetchAndUpdate();
         fetchProjects();
       }
-    
       return value;
     } catch(err) {
-  }
-    dns.resolve(address, function(err, addresses) {
-
-      cb(err ? operation.mainError() : null, addresses);
-    });
-  });
-}
-
-faultTolerantResolve(function(err, addresses) {
-  console.log(err, addresses);
+      console.log(err);
+    }
+})
+.then(function (value) {
+    // ..
+}, function (err) {
+    // ..
 });
+
 // All projects has a special format
 const listProjects = (projects) => {
    const message = projects.map(project => {
