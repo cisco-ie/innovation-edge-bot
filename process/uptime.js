@@ -1,4 +1,4 @@
-const { TRIGGER, CONVO } = require('../constants/index.js');
+const { TRIGGERS, CONVO } = require('../constants/index.js');
 const Cache = require('../store/bot_cache.js');
 
 const formatUptime = uptime => {
@@ -37,8 +37,8 @@ module.exports = function(bot, message) {
   
    bot.createConversation(message, function(err, convo) {
       if (!err) {           
-          const triggers = Cache.get(TRIGGERS);
-          const convos = Cache.get(CONVOS);
+          const triggers = Cache.get(TRIGGER);
+          const convos = Cache.get(CONVO);
           convo.setVar('uptime', formatUptime(process.uptime()));
           convo.setVar('convos', convos);
           convo.setVar('triggers', triggers);
@@ -46,4 +46,4 @@ module.exports = function(bot, message) {
           convo.activate();
       }
   });
-};t
+};
