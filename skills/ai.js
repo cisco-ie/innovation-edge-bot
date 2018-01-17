@@ -22,6 +22,17 @@ module.exports = function(controller) {
     // jump to that subthread (if it exists)
     controller.hears('.*' , 'direct_message,direct_mention', (bot, message) => {
       console.log(message)
-      client.message(message.text).then(resp => console.log(resp.entities));
+      client.message(message.text).then(resp => {
+        console.log(resp.entities)
+        if (!resp.entities.intent) {
+          console.log('asda');
+          bot.say('Hmmm ask me again...');
+        } else {
+          const intent = resp.entities.intent[0].value;
+          const process = logic[intent];
+          process(bot, message);
+        }
+      })
+      .catch(console.log);
     });
 }
