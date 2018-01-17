@@ -3,8 +3,6 @@ const request = require('request');
 const pokeNumber = 800;
 
 module.exports = (bot, message, entities) => {
-  
-  console.log(message);
   const randomIntros = [
     'Sure! Looking in my Pokédex right now... 🤓',
     'Lucky for you, I\'m a Pokémon Master! Let me check my Pokédex...',
