@@ -30,7 +30,7 @@ module.exports = function(controller) {
           const intent = resp.entities.intent[0].value;
           const process = logic[intent];
           if (process) {
-            process(bot, message);
+            process(bot, message, resp.entities);
           } else {
             controller.studio.runTrigger(bot, intent, message.user, message.channel)
               .catch(err => {
