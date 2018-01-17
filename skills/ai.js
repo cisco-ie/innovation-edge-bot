@@ -26,7 +26,7 @@ module.exports = function(controller) {
         console.log(resp.entities)
         if (!resp.entities.intent) {
           console.log('asda');
-          bot.say('Hmmm ask me again...');
+          bot.reply(message, 'Hmmm ask me again...');
         } else {
           const intent = resp.entities.intent[0].value;
           const process = logic[intent];
