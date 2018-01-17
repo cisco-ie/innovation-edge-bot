@@ -9,7 +9,7 @@ respond immediately with a single line response.
 
 */
 const Cache = require('../store/bot_cache.js');
-const { TRIGGER, CONVO } = require('../constants/index.js');
+const { TRIGGERS, CONVO } = require('../constants/index.js');
 
 var wordfilter = require('wordfilter');
 
@@ -22,31 +22,11 @@ module.exports = function(controller) {
 
     controller.on('heard_trigger', function() {
         stats.triggers++;
-        Cache.set(TRIGGER, stats.triggers);
+        Cache.set(TRIGGERS, stats.triggers);
     });
 
     controller.on('conversationStarted', function() {
         stats.convos++;
         Cache.set(CONVO, stats.convos);
-    });
-
-
-  
-    controller.hears(['^uptime','^debug'], 'direct_message,direct_mention', function(bot, message) {
-
- 
-    });
-
-    controller.hears(['^say (.*)','^say'], 'direct_message,direct_mention', function(bot, message) {
-        if (message.match[1]) {
-
-            if (!wordfilter.blacklisted(message.match[1])) {
-                bot.reply(message, message.match[1]);
-            } else {
-                bot.reply(message, '_sigh_');
-            }
-        } else {
-            bot.reply(message, 'I will repeat whatever you say.')
-        }
     });
 };

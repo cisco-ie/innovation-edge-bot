@@ -21,23 +21,9 @@ const formatUptime = uptime => {
 };
 
 module.exports = function(bot, message) {
-//       /* Collect some very simple runtime stats for use in the uptime/debug command */
-//     var stats = {
-//         triggers: 0,
-//         convos: 0,
-//     }
-
-//     controller.on('heard_trigger', function() {
-//         stats.triggers++;
-//     });
-
-//     controller.on('conversationStarted', function() {
-//         stats.convos++;
-//     });
-  
    bot.createConversation(message, function(err, convo) {
       if (!err) {           
-          const triggers = Cache.get(TRIGGER);
+          const triggers = Cache.get(TRIGGERS);
           const convos = Cache.get(CONVO);
           convo.setVar('uptime', formatUptime(process.uptime()));
           convo.setVar('convos', convos);
