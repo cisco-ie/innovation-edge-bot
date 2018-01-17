@@ -29,7 +29,14 @@ module.exports = function(controller) {
         } else {
           const intent = resp.entities.intent[0].value;
           const process = logic[intent];
-          process(bot, message);
+          if (process) {
+            process(bot, message);
+          } else {
+            controller.studio.runTrigger(bot, intent, message.user, message.channel)
+              .catch(err => {
+                bot.reply(message, 'I experienced an error, please contact my creator (brhim@cisco.com) with this error message: /n >' + err);
+              });
+          }
         }
       })
       .catch(console.log);
