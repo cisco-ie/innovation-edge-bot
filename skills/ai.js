@@ -1,9 +1,20 @@
+const path = require('path');
 const {Wit, log} = require('node-wit');
 const WIT_TOKEN = process.env.wit_token;
 const client = new Wit({
   accessToken: WIT_TOKEN,
   logger: new log.Logger(log.DEBUG) // optional
 });
+
+const logic = {};
+
+var normalizedPath = path.join("process");
+require("fs").readdirSync(normalizedPath).forEach(function(file) {
+  const intentName = file.split(".").shift();
+  logic[intentName] = require(path.join(__dirname, '..', normalizedPath, file));
+});
+
+console.log(logic);
 
 module.exports = function(controller) {
     // This before middleware allows the help command to accept sub-thread names as a parameter
@@ -12,7 +23,5 @@ module.exports = function(controller) {
     controller.hears('.*' , 'direct_message,direct_mention', (bot, message) => {
       console.log(message)
       client.message(message.text).then(resp => console.log(resp.entities));
-
-      
     });
 }
