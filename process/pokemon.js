@@ -1,21 +1,22 @@
 const wordfilter = require('wordfilter');
-var PokeApi = require('pokeapi');
+const request = require('request');
 const pokeNumber = 800;
-var api = PokeApi.v1();
 
 module.exports = (bot, message, entities) => {
+  bot.reply(message, 'Sure! Looking in my Pokédex right now... 🤓');
   var randomNumber = Math.floor(Math.random() * pokeNumber);
-  api.get('pokemon', randomNumber).then(function(pokemon) {
-    console.log(pokemon);
+  request('http://pokeapi.co/api/v2/pokemon/' + randomNumber, function (error, response, body) {
+    if (error) {
+      bot.say('Maayday, we got a problem. Try again later.');
+    }
+    const pokemon = JSON.parse(body);
+    const name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
     const messageObject = {
-      // text: `Have you heard of, ${pokemon.name}! ${pokemon.name} has **${pokemon.moves.length}** moves, and weighs ${pokemon.weight} lbs!`,
+      text: `### #${randomNumer} ${name} \n ${name} has **${pokemon.moves.length}** moves, and weighs ${pokemon.weight} lbs!`,
       files:[
         `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${randomNumber}.png`
       ]
     };
-    
-    bot.say(message, messageObject);
-  }, function(err) {
-      console.log('ERROR', err);
+    bot.reply(message, messageObject);
   });
-}
+};
