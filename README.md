@@ -1,23 +1,48 @@
-# spark-innovation-edge
-🕶 Our personal Innovation Edge assistant that can be interacted with on spark, innovation-edge@sparkbot.io.
+# innovation-edge-bot
+> 🕶 Our personal Innovation Edge Cisco Spark Bot that fetches pokemon, projects, news, answers questions, and more!
 
-Currently built off of Botkit Studio and utilizing [Wit.ai](http://wit.ai) to process Natural Language Processing and Understanding.
+Cisco Spark is powerful communication tool for empowering collaboration among teams within a global space or business. To illustrate the power of chatbots, we've created our own personal assitant, the `innovation-edge-bot`! It also has natural language understanding so you can freely ask it many things, here are some sample phrases:
+
+- "I want to learn more about innovation edge"
+- "Tell me more about you guys"
+- "What are you guys working on?"
+- "Show me your projects."
+- "Simon Says, `<statement>`"
+- "How long have you been up?"
+- "Do you know any pokemon?"
+- "Show me news for `<news topic>`"
+- "What's happening in `<news topic>`?"
+
+To use our bot, message **innovation-edge@sparkbot.io** on [Cisco Spark](https://www.ciscospark.com/)
+
+## Technical Insights
+`innovation-edge-bot` is using Node.js and built with Botkit. It uses [Wit.ai](http://wit.ai) for Natural Language Processing and Understanding.
 
 ## Skills
 ### Display Projects
-The bot displays projects based on categories of *(Completed / Active / Potential / Inactive)*
-![image](https://user-images.githubusercontent.com/6020066/35170276-80ea05ee-fd14-11e7-83dd-7b8c94745207.png)
+
+> Displays projects based on categories of *(Completed / Active / Potential / Inactive)* that is processed from a SmartSheet
+
+<img src="https://user-images.githubusercontent.com/6020066/35170276-80ea05ee-fd14-11e7-83dd-7b8c94745207.png" height="150">
 
 ### Answers Common Innovation Edge Questions
-To respond to commonly asked questions, the bot will provide answers.
-![image](https://user-images.githubusercontent.com/6020066/35170421-145c85cc-fd15-11e7-8e4b-abbd18938fdd.png)
+> Responds commonly asked questions for Innovation Edge, and provide answers
+
+<img src="https://user-images.githubusercontent.com/6020066/35170421-145c85cc-fd15-11e7-8e4b-abbd18938fdd.png" height="150">
 
 ### Fetches News
-The bot will process Google news based on your desired news category, and display up to **3** relevant articles:
-![image](https://user-images.githubusercontent.com/6020066/35170381-dc8d68f0-fd14-11e7-85db-4c687437e6ec.png)
+> Search within Google news per user search `intent` and display up to **3** relevant articles
+
+<img src="https://user-images.githubusercontent.com/6020066/35170381-dc8d68f0-fd14-11e7-85db-4c687437e6ec.png" height="250">
+
 
 ### Display Pokemon
-![image](https://user-images.githubusercontent.com/6020066/35170402-fb04b6b2-fd14-11e7-85e9-2e318a1045a7.png)
+> Fetches a Pokemon and displays common stats
+
+<img src="https://user-images.githubusercontent.com/6020066/35170402-fb04b6b2-fd14-11e7-85e9-2e318a1045a7.png" height="150">
+
+## Questions
+You can message brhim@cisco.com for additional information.
 
 ## License
-MIT
+MIT - © Cisco Innovation Edge 
