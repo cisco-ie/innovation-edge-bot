@@ -43,6 +43,10 @@ You can download and import the training data for Wit.ai with the [`WitAiData.zi
 
 <img src="https://user-images.githubusercontent.com/6020066/35170402-fb04b6b2-fd14-11e7-85e9-2e318a1045a7.png" height="150">
 
+### Simon Says
+> Repeats after what you say
+<img src="https://user-images.githubusercontent.com/6020066/35248080-a18ff60e-ff81-11e7-9bbb-852effe9be1b.png" height="150">
+
 ## Questions
 You can message brhim@cisco.com for additional information.
 
