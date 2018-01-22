@@ -1,5 +1,5 @@
 # innovation-edge-bot
-> 🕶 Our personal Innovation Edge Cisco Spark Bot that fetches pokemon, projects, news, answers questions, and more!
+>🤖 🕶 Innovation Edge's Cisco Spark bot that fetches pokemon, projects, news, answers questions, and more! Edit
 
 Cisco Spark is powerful communication tool for empowering collaboration among teams within a global space or business. To illustrate the power of chatbots, we've created our own personal assitant, the `innovation-edge-bot`! It also has natural language understanding so you can freely ask it many things, here are some sample phrases:
 
@@ -17,6 +17,8 @@ To use our bot, message **innovation-edge@sparkbot.io** on [Cisco Spark](https:/
 
 ## Technical Insights
 `innovation-edge-bot` is using Node.js and built with Botkit. It uses [Wit.ai](http://wit.ai) for Natural Language Processing and Understanding.
+
+You can download and import the training data for Wit.ai with the [`WitAiData.zip`](https://github.com/cisco-ie/innovation-edge-bot/blob/master/WitAiData.zip).
 
 ## Skills
 ### Display Projects
