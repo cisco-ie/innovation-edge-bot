@@ -35,38 +35,41 @@ You can download and import the training data for Wit.ai with the [`WitAiData.zi
 `innovation-edge-bot` contains various skills that can be a great reference point for creating your own bots. 
 
 **Available Skills:**
-- [Display Projects](#Display-Projects)
-- [FAQs](#Answer-Frequently-Asked-Questions)
-- [News](#News)
-- [Pokemon](#Pokemon)
-- [Simon Says](#Simon-Says)
-- [Uptime](#Uptime)
+- [Display Projects](#display-projects)
+- [FAQs](#answer-frequently-asked-questions)
+- [News](#news)
+- [Pokemon](#pokemon)
+- [Simon Says](#simon-says)
+- [Uptime](#uptime)
 
 ### Display Projects
 Displays projects based on categories of *(Completed / Active / Potential / Inactive)* that is processed from a SmartSheet.
 
-#### Example Triggers:
+#### Example Triggers
 - `Can you show me projects?`
 - `Show me projects?`
 
+#### Result
 <img src="https://user-images.githubusercontent.com/6020066/35170276-80ea05ee-fd14-11e7-83dd-7b8c94745207.png" height="150">
 
 ### Answer Frequently Asked Questions
 Provides commonly asked questions regarding the Innovation Edge team, and provide associated answers.
 
-#### Example Triggers:
+#### Example Triggers
 - `I want to learn more about IE`
 - `Can you tell me more?`
 
+#### Result
 <img src="https://user-images.githubusercontent.com/6020066/35170421-145c85cc-fd15-11e7-8e4b-abbd18938fdd.png" height="150">
 
 ### News
 Fetches the latest Google RSS feed and parses it per user search `<NEWS_QUERY>` and display up to **3** relevant articles.
 
-#### Example Triggers:
+#### Example Triggers
 - `Tell me what's happening in <NEWS_QUERY>`
 - `Show me news in <NEWS_QUERY>`
 
+#### Result
 <img src="https://user-images.githubusercontent.com/6020066/35170381-dc8d68f0-fd14-11e7-85db-4c687437e6ec.png" height="250">
 
 ### Pokemon
@@ -76,6 +79,7 @@ Performs an API call to `pokeapi.com` and fetches a random Pokemon. The bot will
 - `Can you show me a pokemon?`
 - `What pokemon do you know?`
 
+#### Result
 <img src="https://user-images.githubusercontent.com/6020066/35170402-fb04b6b2-fd14-11e7-85e9-2e318a1045a7.png" height="150">
 
 ### Simon Says
@@ -85,6 +89,7 @@ Attempts to find the `<REPEAT_PHRASE>` and repeats it.
 - `Repeat after me <REPEAT_PHRASE>`
 - `Simon Says <REPEAT_PHRASE>`
 
+#### Result
 <img src="https://user-images.githubusercontent.com/6020066/35248080-a18ff60e-ff81-11e7-9bbb-852effe9be1b.png" height="150">
 
 ### Uptime
@@ -94,6 +99,7 @@ Displays the time the bot has been running, combined with an emoji to express it
 - `How long have you been up?`
 - `Current uptime?`
 
+#### Result
 <img src="https://user-images.githubusercontent.com/6020066/35248934-d6aba452-ff84-11e7-832c-6e3bda2abb9b.png">
 
 ## Questions
