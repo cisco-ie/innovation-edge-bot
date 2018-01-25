@@ -31,14 +31,14 @@ This repository is built off of [Howdy.ai's `botkit-starter-ciscospark`](https:/
 ### NLP/NLU Training Data
 You can download and import the training data for Wit.ai with the [`WitAiData.zip`](https://github.com/cisco-ie/innovation-edge-bot/blob/master/WitAiData.zip).
 
-## Skills
-`innovation-edge-bot` contains various skills that can be a great reference point for creating your own bots. 
-
-## Helpful Node Modules
+### Helpful Node Modules
 On top of the starter-kit, we are leveraging well-tested node modules to help with various things.
 
 - [Spark Messages](https://github.com/brh55/spark-messages) - Help simplify complicated `markdown` messages into a succinct manner
 - [Node Cache](https://github.com/ptarjan/node-cache) - Simplify internal caching
+
+## Skills
+`innovation-edge-bot` contains various skills that can be a great reference point for creating your own bots. 
 
 **Available Skills:**
 - [Display Projects](#display-projects)
